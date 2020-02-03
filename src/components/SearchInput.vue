@@ -50,13 +50,14 @@ export default {
     }
 
     .dark {
-      color: red;
-      border-bottom-color: red;
+      color: #4C1F96;
+      border-bottom-color: #4C1F96;
+      margin-top: 50px;
     }
 
     .dark:focus {
-      color: red;
-      box-shadow: 0 8px 15px -8px red;
+      color: #4C1F96;
+      box-shadow: 0 8px 15px -8px #4C1F96;
     }
 
 </style>

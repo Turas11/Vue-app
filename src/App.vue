@@ -1,13 +1,16 @@
 <template>
-    <div :class="[{ flexstart: step === 1}, 'wrapper']">
-      <transition>
-      <img src="./assets/logo.png" class="logo">
-      </transition>
+  <div :class="[{ flexstart: step === 1}, 'wrapper']">
+      <transition name="slide">
+      <p class="logo" v-if="step === 1">SPACER</p>
+       </transition>
       <transition name="component-fade">
         <background v-if="step === 0" />
       </transition>
       <Claim v-if="step === 0"/>
       <SearchInput v-model="searchValue" @input="handleinput" :dark="step === 1"/>
+      <div class="results" v-if="results && !loading && step === 1">
+          <item v-for="item in results" :item="item" :key="item.data[0].nasa_id" />
+      </div>
     </div>
 </template>
 
@@ -18,6 +21,7 @@ import debounce from 'lodash.debounce';
 import Claim from '@/components/Claim.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import background from '@/components/background.vue';
+import item from '@/components/item.vue';
 
 const API = 'https://images-api.nasa.gov/search';
 
@@ -28,6 +32,7 @@ export default {
     Claim,
     SearchInput,
     background,
+    item,
   },
   data() {
     return {
@@ -73,14 +78,24 @@ export default {
   }
 
   .component-fade-enter-active, .component-fade-leave-active {
-    transition: opacity .3s ease;
+    transition: opacity .7s ease;
   }
   .component-fade-enter, .component-fade-leave-to
   {
     opacity: 0;
   }
+
+  .slide-enter-active, .slide-leave-active {
+    transition: margin-top .3s ease;
+  }
+  .slide-enter, .slide-leave-to
+  {
+    margin-top: -50px;
+  }
+
   .wrapper{
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -93,5 +108,23 @@ export default {
     justify-content: flex-start;
 
     }
-}
+  }
+  .logo {
+    position: absolute;
+    top: 20px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 600;
+
+
+  }
+  .results {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 30px;
+
+  }
+
+
 </style>
