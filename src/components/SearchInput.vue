@@ -2,7 +2,9 @@
     <input id="search"
     name="search"
     :value="value"
-    @input="handlechange">
+    @input="handlechange"
+    :class="{ dark }">
+
 </template>
 
 <script>
@@ -12,6 +14,11 @@ export default {
     value: {
       type: String,
       required: true,
+    },
+    dark: {
+      type: Boolean,
+      default: false,
+
     },
   },
   methods: {
@@ -40,6 +47,16 @@ export default {
     input:focus {
       outline: none;
       box-shadow: 0 8px 15px -8px white;
+    }
+
+    .dark {
+      color: red;
+      border-bottom-color: red;
+    }
+
+    .dark:focus {
+      color: red;
+      box-shadow: 0 8px 15px -8px red;
     }
 
 </style>

@@ -1,8 +1,13 @@
 <template>
-    <div class="wrapper">
-      <background />
-      <Claim />
-      <SearchInput v-model="searchValue" @input="handleinput"/>
+    <div :class="[{ flexstart: step === 1}, 'wrapper']">
+      <transition>
+      <img src="./assets/logo.png" class="logo">
+      </transition>
+      <transition name="component-fade">
+        <background v-if="step === 0" />
+      </transition>
+      <Claim v-if="step === 0"/>
+      <SearchInput v-model="searchValue" @input="handleinput" :dark="step === 1"/>
     </div>
 </template>
 
@@ -26,16 +31,22 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      step: 0,
       searchValue: '',
       results: [],
     };
   },
   methods: {
     handleinput: debounce(function () {
+      this.loading = true;
+
       console.log(this.searchValue);
       axios.get(`${API}?q=${this.searchValue}&media_type=image`)
         .then((response) => {
           this.results = response.data.collection.items;
+          this.loading = false;
+          this.step = 1;
         })
         .catch((error) => {
           console.log(error);
@@ -60,6 +71,14 @@ export default {
     padding: 0;
 
   }
+
+  .component-fade-enter-active, .component-fade-leave-active {
+    transition: opacity .3s ease;
+  }
+  .component-fade-enter, .component-fade-leave-to
+  {
+    opacity: 0;
+  }
   .wrapper{
     display: flex;
     flex-direction: column;
@@ -69,6 +88,10 @@ export default {
     padding: 30px;
     width: 100%;
     height: 100vh;
-  }
 
+    &.flexstart {
+    justify-content: flex-start;
+
+    }
+}
 </style>
