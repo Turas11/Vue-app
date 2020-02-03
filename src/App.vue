@@ -12,6 +12,8 @@
   }
   body {
     font-family: 'Monsterrat', sans-serif;
+    margin: 0;
+    padding: 0;
   }
 
 </style>
