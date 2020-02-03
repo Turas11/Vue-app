@@ -9,7 +9,9 @@
 
 <script>
 export default {
-}
+  name: 'Claim',
+
+};
 </script>
 
 <style lang="scss" scoped>
