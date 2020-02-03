@@ -33,5 +33,7 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50%;
-  }
+}
+
+
 </style>

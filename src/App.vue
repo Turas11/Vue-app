@@ -122,7 +122,20 @@ export default {
     margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 30px;
+    grid-gap: 20px;
+
+    @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 950px) {
+    grid-template-columns: 1fr 1fr;
+    }
+
+
+    @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    }
 
   }
 
