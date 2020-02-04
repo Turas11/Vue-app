@@ -9,8 +9,11 @@
       <Claim v-if="step === 0"/>
       <SearchInput v-model="searchValue" @input="handleinput" :dark="step === 1"/>
       <div class="results" v-if="results && !loading && step === 1">
-          <item v-for="item in results" :item="item" :key="item.data[0].nasa_id" />
+          <item v-for="item in results" :item="item" :key="item.data[0].nasa_id"
+          @click.native="handleModalOpen(item)" />
       </div>
+      <div class="loader" v-if="step === 1 && loading" />
+      <modal v-if="modalOpen" @closeModal="modalOpen = false" :item="modalItem" />
     </div>
 </template>
 
@@ -22,6 +25,7 @@ import Claim from '@/components/Claim.vue';
 import SearchInput from '@/components/SearchInput.vue';
 import background from '@/components/background.vue';
 import item from '@/components/item.vue';
+import modal from '@/components/modal.vue';
 
 const API = 'https://images-api.nasa.gov/search';
 
@@ -33,6 +37,7 @@ export default {
     SearchInput,
     background,
     item,
+    modal,
   },
   data() {
     return {
@@ -40,9 +45,15 @@ export default {
       step: 0,
       searchValue: '',
       results: [],
+      modalOpen: false,
+      modalItem: [],
     };
   },
   methods: {
+    handleModalOpen(it) {
+      this.modalOpen = true;
+      this.modalItem = it;
+    },
     handleinput: debounce(function () {
       this.loading = true;
 
@@ -138,6 +149,32 @@ export default {
     }
 
   }
+
+.loader {
+  margin-top: 100px;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.loader:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #4C1F96;
+  border-color: #4C1F96 transparent #4C1F96 transparent;
+  animation: loading 1.2s linear infinite;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 
 </style>
