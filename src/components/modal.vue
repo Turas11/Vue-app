@@ -111,8 +111,7 @@ export default {
 }
 
   .photo {
-    width: 70%;
-    height: 50%;
+    width: auto;
     height: auto;
     background: block;
 
